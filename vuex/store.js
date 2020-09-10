@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import persistedState from 'vuex-persistedstate'
+import * as Cookies from 'js-cookie'
 
 Vue.use(Vuex)
 
 const state = {
-  count: 0
+  count: 0,
+  count1: 0
 }
 
 const mutations = {
@@ -12,7 +15,7 @@ const mutations = {
     return (state.count += n)
   },
   mutationsReduceCount(state, n = 0) {
-    return (state.count -= n)
+    return (state.count1 -= n)
   }
 }
 
@@ -36,5 +39,21 @@ export default new Vuex.Store({
   state,
   mutations,
   actions,
-  getters
+  getters,
+  plugins: [
+    persistedState({
+      // 默认localStorage
+      // storage: window.sessionStorage
+      storage: {
+        getItem: key => Cookies.get(key),
+        setItem: (key, value) => Cookies.set(key, value, { expires: 7 }),
+        removeItem: key => Cookies.remove(key)
+      },
+      reducer(val){
+        return {
+          count: val.count
+        }
+      }
+    })
+  ]
 })

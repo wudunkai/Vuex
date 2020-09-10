@@ -14,7 +14,8 @@
   </div>
 </template>
 <script>
-import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
+import * as Cookies from 'js-cookie'
+// import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
@@ -23,32 +24,35 @@ export default {
     }
   },
   methods:{
-    ...mapMutations({
-      handleAddClick: 'mutationsAddCount',
-      handleReduceClick: 'mutationsReduceCount'
-    }),
-    ...mapActions({
-      handleActionsAdd: 'actionsAddCount',
-      handleActionsReduce: 'actionsReduceCount'
-    })
+    // ...mapMutations({
+    //   handleAddClick: 'mutationsAddCount',
+    //   handleReduceClick: 'mutationsReduceCount'
+    // }),
+    // ...mapActions({
+    //   handleActionsAdd: 'actionsAddCount',
+    //   handleActionsReduce: 'actionsReduceCount'
+    // })
     // // mutations
-    // handleAddClick(n){
-    //   this.$store.commit('mutationsAddCount',n);
-    // },
-    // handleReduceClick(n){
-    //   this.$store.commit('mutationsReduceCount',n);
-    // },
-    // // actions
-    // handleActionsAdd(n){
-    //   this.$store.dispatch('actionsAddCount',n)
-    // },
-    // handleActionsReduce(n){
-    //   this.$store.dispatch('actionsReduceCount',n)
-    // },
+    handleAddClick(n){
+      this.$store.commit('mutationsAddCount',n);
+    },
+    handleReduceClick(n){
+      this.$store.commit('mutationsReduceCount',n);
+    },
+    // actions
+    handleActionsAdd(n){
+      this.$store.dispatch('actionsAddCount',n)
+    },
+    handleActionsReduce(n){
+      this.$store.dispatch('actionsReduceCount',n)
+    },
+  },
+  mounted(){
+    console.log(Cookies.get('vuex'))
   },
   computed:{
     count(){
-      // return this.$store.getters.getterCount 
+      return this.$store.state.count1 
     }
   }
 }
